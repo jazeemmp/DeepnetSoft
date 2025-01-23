@@ -22,27 +22,29 @@ const Main = () => {
     }
   };
 
-  const handleSubmit = async(values:FormValues)=>{
+  const handleSubmit = async (values: FormValues) => {
     try {
-      const {data} = await axios.post('/add/menu', values);
+      const { data } = await axios.post("/add/menu", values);
       console.log(data);
       setMenus((prevMenus: any) => {
-        const existingMenuIndex = prevMenus.findIndex((menu: any) => menu.menuName === data.menuName);
+        const existingMenuIndex = prevMenus.findIndex(
+          (menu: any) => menu.menuName === data.menuName
+        );
 
         if (existingMenuIndex > -1) {
           const updatedMenus = [...prevMenus];
-          updatedMenus[existingMenuIndex] = data; 
+          updatedMenus[existingMenuIndex] = data;
           return updatedMenus;
         } else {
           return [...prevMenus, data];
         }
       });
-      setCurrentMenu(data)
+      setCurrentMenu(data);
       setOpenModal(false);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   useEffect(() => {
     getMenus();
   }, []);
@@ -55,9 +57,16 @@ const Main = () => {
       >
         {menus.map((menu: any) => (
           <button
-            style={{ textShadow: "2px 1px 0px #800020" }}
+            style={{
+              textShadow:
+                currentMenu?.menuName === menu.menuName
+                  ? "none"
+                  : "2px 1px 0px #800020", 
+              backgroundColor:
+                currentMenu?.menuName === menu.menuName ? "#0796EF" : "black",
+            }}
             onClick={() => setCurrentMenu(menu)}
-            className="md:w-[114px] w-[72px] md:h-[50px] h-[31px] uppercase bg-black text-white font-[oswald] font-semibold md:text-[18px] text-[12px] leading-[27px] border-[0.5px] border-[#0796EF]"
+            className="md:w-[114px] w-[72px] md:h-[50px] h-[31px] uppercase text-white font-[oswald] font-semibold md:text-[18px] text-[12px] leading-[27px] border-[0.5px] border-[#0796EF]"
           >
             {menu.menuName}
           </button>
@@ -130,7 +139,12 @@ const Main = () => {
           >
             Add Menu
           </button>
-          {openModal && <CreateMenuModal handleSubmit={handleSubmit} setOpenModal={setOpenModal} />}
+          {openModal && (
+            <CreateMenuModal
+              handleSubmit={handleSubmit}
+              setOpenModal={setOpenModal}
+            />
+          )}
         </div>
 
         <img src={frame2} className="hidden md:block" />

@@ -11,12 +11,16 @@ mongoConnect();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const corsOptions = {
-  origin: ["http://localhost:5173","https://frontend-ko98ft129-jazeemmps-projects.vercel.app/"],
+  origin: [
+    "http://localhost:5173", 
+    "https://frontend-ko98ft129-jazeemmps-projects.vercel.app", 
+    "https://frontend-seven-pi-91.vercel.app"
+  ],
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
-app.use(express.json());
 app.use(cors(corsOptions));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
