@@ -8,6 +8,7 @@ import CreateMenuModal from "./CreateMenuModal";
 import axios from "../../api/axios";
 import banner2 from "../../assets/Rectangle2.png";
 import { FormValues } from "../../interface/interface";
+import { toast } from "sonner";
 
 const Main = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -19,6 +20,7 @@ const Main = () => {
       setMenus(data);
     } catch (error) {
       console.log(error);
+      toast.error("Error while fetching data")
     }
   };
 
@@ -41,8 +43,10 @@ const Main = () => {
       });
       setCurrentMenu(data);
       setOpenModal(false);
+      toast.success("Menu added successfully");
     } catch (error) {
       console.log(error);
+      toast.error("Error while adding menu");
     }
   };
   useEffect(() => {
@@ -61,7 +65,7 @@ const Main = () => {
               textShadow:
                 currentMenu?.menuName === menu.menuName
                   ? "none"
-                  : "2px 1px 0px #800020", 
+                  : "2px 1px 0px #800020",
               backgroundColor:
                 currentMenu?.menuName === menu.menuName ? "#0796EF" : "black",
             }}
@@ -126,7 +130,7 @@ const Main = () => {
             </div>
           )}
 
-          {menus.length <= 0 && (
+          {menus && menus.length <= 0 && (
             <div className="text-center">
               <p className="font-[Oswald] text-white text-[20px] ">
                 The menu is empty. Please click the button below to add an item.
