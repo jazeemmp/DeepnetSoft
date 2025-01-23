@@ -1,0 +1,5 @@
+export { default as Navbar } from './Navbar/Navbar'
+export {default as Banner} from './Banner'
+export {default as Main} from './Main/Main'
+export {default as Footer} from './Footer/Footer'
+export {default as CopyRight} from './Footer/CopyRight'
